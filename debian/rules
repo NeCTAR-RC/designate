@@ -5,7 +5,7 @@ include /usr/share/openstack-pkg-tools/pkgos.make
 export OSLO_PACKAGE_VERSION=$(VERSION)
 
 %:
-	dh $@ --buildsystem=python_distutils --with python2,sphinxdoc,systemd
+	dh $@ --buildsystem=python_distutils --with python2,systemd
 
 override_dh_auto_install:
 	dh_auto_install -O--buildsystem=python_distutils
@@ -40,8 +40,3 @@ ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 	testr slowest
 endif
 
-override_dh_sphinxdoc:
-ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
-	PYTHONPATH=. sphinx-build -b html doc/source $(CURDIR)/debian/designate-doc/usr/share/doc/designate-doc/html
-	dh_sphinxdoc -O--buildsystem=python_distutils
-endif
