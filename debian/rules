@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 UPSTREAM_GIT = git://github.com/openstack/designate.git
-include /usr/share/openstack-pkg-tools/pkgos.make
+#include /usr/share/openstack-pkg-tools/pkgos.make
 
 VERSION := $(shell dpkg-parsechangelog | sed -rne 's,^Version: ([0-9]:)*([^-]+).*,\2,p')
 export OSLO_PACKAGE_VERSION=$(VERSION)
