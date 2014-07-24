@@ -1,5 +1,5 @@
 etc/designate
-etc/designate/conf.d
+etc/designate/rootwrap.d
 var/lib/designate
 var/log/designate
 usr/share/designate

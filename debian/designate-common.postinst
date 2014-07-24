@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+if [ "$1" = "configure" ]; then
+    if ! getent group designate > /dev/null 2>&1; then
+        addgroup --system designate >/dev/null
+    fi
+
+    if ! getent passwd designate > /dev/null 2>&1; then
+        adduser --system --home /var/lib/designate --ingroup designate --no-create-home --shell /bin/false designate
+    fi
+
+    if [ "$(id -gn designate)"  = "nogroup" ]; then
+      usermod -g designate designate
+    fi
+
+    chown -R designate:designate /etc/designate
+    chown -R designate:adm /var/log/designate
+
+    if [ -z "$2" ]; then
+        # New install - blanket permissions
+        find /var/lib/designate/ -path /var/lib/designate/instances -prune -o -exec chown designate:designate {} \;
+    fi
+
+    chmod 0640 /etc/designate/designate.conf
+    chmod 0640 /etc/designate/policy.json
+    chmod 0640 /etc/designate/api-paste.ini
+    chmod 0750 /etc/designate
+    chmod 0750 /var/log/designate
+    chown root:root /etc/designate/rootwrap.conf
+    chown root:root /etc/designate/rootwrap.d
+    chmod 0755 /etc/designate/rootwrap.d
+
+    if [ -e /var/lib/designate/designate.sqlite ]
+    then
+      chown designate:designate /var/lib/designate/designate.sqlite
+      chmod 0640 /var/lib/designate/designate.sqlite
+    fi
+
+fi
+
+#DEBHELPER#
