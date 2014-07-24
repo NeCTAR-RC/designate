@@ -18,7 +18,7 @@ if [ "$1" = "configure" ]; then
 
     if [ -z "$2" ]; then
         # New install - blanket permissions
-        find /var/lib/designate/ -path /var/lib/designate/instances -prune -o -exec chown designate:designate {} \;
+        chown -R designate:designate /var/lib/designate/
     fi
 
     chmod 0640 /etc/designate/designate.conf
