@@ -195,10 +195,10 @@ def get_columns(data):
 
 
 def increment_serial(serial=0):
-    # This provides for *roughly* unix timestamp based serial numbers
-    new_serial = timeutils.utcnow_ts()
-
-    if new_serial <= serial:
+    new_date = int(timeutils.strtime(fmt="%Y%m%d"))
+    old_date = serial / 100
+    new_serial = new_date * 100
+    if new_date == old_date:
         new_serial = serial + 1
 
     return new_serial
