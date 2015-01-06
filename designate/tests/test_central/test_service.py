@@ -19,6 +19,8 @@ import random
 
 import testtools
 from testtools.matchers import GreaterThan
+from mock import patch
+from oslo.db import exception as db_exception
 
 from designate.openstack.common import log as logging
 from designate import exceptions
@@ -904,6 +906,39 @@ class CentralServiceTest(CentralTestCase):
         with testtools.ExpectedException(exceptions.BadRequest):
             self.central_service.update_domain(self.admin_context, domain)
 
+    def test_update_domain_deadlock_retry(self):
+        # Create a domain
+        domain = self.create_domain(name='example.org.')
+        original_serial = domain.serial
+
+        # Update the Object
+        domain.email = 'info@example.net'
+
+        # Due to Python's scoping of i - we need to make it a mutable type
+        # for the counter to work.. In Py3, we can use the nonlocal keyword.
+        i = [False]
+
+        def fail_once_then_pass():
+            if i[0] is True:
+                return self.central_service.storage.session.commit()
+            else:
+                i[0] = True
+                raise db_exception.DBDeadlock()
+
+        with patch.object(self.central_service.storage, 'commit',
+                          side_effect=fail_once_then_pass):
+            # Perform the update
+            domain = self.central_service.update_domain(
+                self.admin_context, domain)
+
+        # Ensure i[0] is True, indicating the side_effect code above was
+        # triggered
+        self.assertTrue(i[0])
+
+        # Ensure the domain was updated correctly
+        self.assertTrue(domain.serial > original_serial)
+        self.assertEqual('info@example.net', domain.email)
+
     def test_delete_domain(self):
         # Create a domain
         domain = self.create_domain()
@@ -1268,6 +1303,40 @@ class CentralServiceTest(CentralTestCase):
         # Ensure the new value took
         self.assertEqual(recordset.ttl, 1800)
         self.assertThat(new_serial, GreaterThan(original_serial))
+
+    def test_update_recordset_deadlock_retry(self):
+        # Create a domain
+        domain = self.create_domain()
+
+        # Create a recordset
+        recordset = self.create_recordset(domain)
+
+        # Update the recordset
+        recordset.ttl = 1800
+
+        # Due to Python's scoping of i - we need to make it a mutable type
+        # for the counter to work.. In Py3, we can use the nonlocal keyword.
+        i = [False]
+
+        def fail_once_then_pass():
+            if i[0] is True:
+                return self.central_service.storage.session.commit()
+            else:
+                i[0] = True
+                raise db_exception.DBDeadlock()
+
+        with patch.object(self.central_service.storage, 'commit',
+                          side_effect=fail_once_then_pass):
+            # Perform the update
+            recordset = self.central_service.update_recordset(
+                self.admin_context, recordset)
+
+        # Ensure i[0] is True, indicating the side_effect code above was
+        # triggered
+        self.assertTrue(i[0])
+
+        # Ensure the recordset was updated correctly
+        self.assertEqual(1800, recordset.ttl)
 
     def test_update_recordset_with_record_create(self):
         # Create a domain

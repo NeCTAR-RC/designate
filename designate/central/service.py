@@ -15,16 +15,24 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 import re
+
 import contextlib
 import functools
 
 from oslo.config import cfg
 from oslo import messaging
 
+import copy
+import threading
+import time
+
+from oslo.db import exception as db_exception
+
 from designate.openstack.common import log as logging
 from designate.openstack.common import excutils
 from designate.i18n import _LI
 from designate.i18n import _LC
+from designate.i18n import _LW
 from designate import backend
 from designate import central
 from designate import exceptions
@@ -52,20 +60,80 @@ def wrap_backend_call():
     except Exception as exc:
         raise exceptions.Backend('Unknown backend failure: %r' % exc)
 
+DOMAIN_LOCKS = threading.local()
+NOTIFICATION_BUFFER = threading.local()
+RETRY_STATE = threading.local()
 
+
+def _retry_on_deadlock(exc):
+    """Filter to trigger retry a when a Deadlock is received."""
+    # TODO(kiall): This is a total leak of the SQLA Driver, we'll need a better
+    #              way to handle this.
+    if isinstance(exc, db_exception.DBDeadlock):
+        LOG.warn(_LW("Deadlock detected. Retrying..."))
+        return True
+    return False
+
+
+def retry(cb=None, retries=50, delay=150):
+    """A retry decorator that ignores attempts at creating nested retries"""
+    def outer(f):
+        @functools.wraps(f)
+        def wrapper(self, *args, **kwargs):
+            if not hasattr(RETRY_STATE, 'held'):
+                # Create the state vars if necessary
+                RETRY_STATE.held = False
+                RETRY_STATE.retries = 0
+
+            if not RETRY_STATE.held:
+                # We're the outermost retry decorator
+                RETRY_STATE.held = True
+
+                try:
+                    while True:
+                        try:
+                            result = f(self, *copy.deepcopy(args),
+                                       **copy.deepcopy(kwargs))
+                            break
+                        except Exception as exc:
+                            RETRY_STATE.retries += 1
+                            if RETRY_STATE.retries >= retries:
+                                # Exceeded retry attempts, raise.
+                                raise
+                            elif cb is not None and cb(exc) is False:
+                                # We're not setup to retry on this exception.
+                                raise
+                            else:
+                                # Retry, with a delay.
+                                time.sleep(delay / float(1000))
+
+                finally:
+                    RETRY_STATE.held = False
+                    RETRY_STATE.retries = 0
+
+            else:
+                # We're an inner retry decorator, just pass on through.
+                result = f(self, *copy.deepcopy(args), **copy.deepcopy(kwargs))
+
+            return result
+        return wrapper
+    return outer
+
+
+# TODO(kiall): Get this a better home :)
 def transaction(f):
-    # TODO(kiall): Get this a better home :)
+    @retry(cb=_retry_on_deadlock)
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):
         self.storage.begin()
         try:
             result = f(self, *args, **kwargs)
+            self.storage.commit()
+            return result
         except Exception:
             with excutils.save_and_reraise_exception():
                 self.storage.rollback()
-        else:
-            self.storage.commit()
-            return result
+
     return wrapper
 
 
