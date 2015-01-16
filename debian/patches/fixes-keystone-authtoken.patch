@@ -1,0 +1,28 @@
+Description: Uncomments keystone_authtoken directives
+Author: Thomas Goirand <zigo@debian.org>
+Forwarded: not-needed
+Last-Update: 2013-12-05
+
+Index: designate/etc/designate/designate.conf.sample
+===================================================================
+--- designate.orig/etc/designate/designate.conf.sample	2014-09-30 15:18:06.000000000 +0800
++++ designate/etc/designate/designate.conf.sample	2014-09-30 15:18:08.000000000 +0800
+@@ -97,12 +97,12 @@
+ # Keystone Middleware
+ #-----------------------
+ [keystone_authtoken]
+-#auth_host = 127.0.0.1
+-#auth_port = 35357
+-#auth_protocol = http
+-#admin_tenant_name = service
+-#admin_user = designate
+-#admin_password = designate
++auth_host = 127.0.0.1
++auth_port = 35357
++auth_protocol = http
++admin_tenant_name = service
++admin_user = designate
++admin_password = designate
+ 
+ #-----------------------
+ # Agent Service

@@ -1,0 +1,227 @@
+Source: designate
+Section: net
+Priority: extra
+Maintainer: PKG OpenStack <openstack-devel@lists.alioth.debian.org>
+Uploaders: Thomas Goirand <zigo@debian.org>
+Build-Depends: debhelper (>= 9),
+               dh-systemd,
+               dh-python,
+               openstack-pkg-tools (>= 13~),
+               python-all (>= 2.6.6-3~),
+               python-pbr (>=0.6),
+               python-setuptools,
+               python-sphinx
+Build-Depends-Indep: python-anyjson (>= 0.3.3),
+                     python-babel (>= 1.3),
+                     python-cmd2,
+                     python-coverage (>= 3.6),
+                     python-dnspython,
+                     python-eventlet (>= 0.15.1),
+                     python-extras,
+                     python-fixtures (>= 0.3.14),
+                     python-flask (>= 0.10),
+                     python-hacking (>= 0.8.0),
+                     python-iso8601 (>= 0.1.9),
+                     python-jsonschema (>= 2.0.0),
+                     python-keystonemiddleware,
+                     python-kombu (>= 2.4.8),
+                     python-lockfile,
+                     python-migrate (>= 0.9.1),
+                     python-mock (>= 1.0),
+                     python-mox,
+                     python-netaddr (>= 0.7.6),
+                     python-neutronclient (>= 2.3.6),
+                     python-oslo.config (>= 1:1.4.0.0~a3),
+                     python-oslo.db (>= 0.4.0),
+                     python-oslo.i18n (>= 0.2.0),
+                     python-oslo.messaging (>= 1.4.1),
+                     python-oslo.rootwrap (>= 1.3.0.0),
+                     python-oslotest (>= 1.1.0.0~a1),
+                     python-oslosphinx (>= 2.2.0.0~a3),
+                     python-paste,
+                     python-pastedeploy (>= 1.5.0),
+                     python-pecan (>= 0.5.0),
+                     python-posix-ipc,
+                     python-prettytable (>= 0.6),
+                     python-routes,
+                     python-six (>= 1.7.0),
+                     python-sphinxcontrib-httpdomain,
+                     python-sqlalchemy (>= 0.8.4),
+                     python-stevedore (>= 0.14),
+                     python-subunit (>= 0.0.18),
+                     python-testscenarios (>= 0.4),
+                     python-testtools (>= 0.9.34),
+                     python-webob (>= 1.2.3),
+                     python-webtest (>= 2.0),
+                     sqlite3,
+                     subunit (>= 0.0.18),
+                     testrepository (>= 0.0.18)
+Standards-Version: 3.9.6
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=openstack/designate.git;a=summary
+Vcs-Git: git://anonscm.debian.org/openstack/designate.git
+Homepage: https://github.com/stackforge/designate
+
+Package: python-designate
+Section: python
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: python-anyjson (>= 0.3.3),
+         python-babel (>= 1.3),
+         python-cmd2,
+         python-dnspython,
+         python-eventlet (>= 0.15.1),
+         python-extras,
+         python-flask (>= 0.10),
+         python-iso8601 (>= 0.1.9),
+         python-jsonschema (>= 2.0.0),
+         python-keystonemiddleware,
+         python-kombu (>= 2.4.8),
+         python-lockfile,
+         python-migrate (>= 0.9.1),
+         python-mysqldb,
+         python-netaddr (>= 0.7.6),
+         python-neutronclient (>= 2.3.6),
+         python-oslo.config (>= 1:1.4.0.0~a3),
+         python-oslo.db (>= 0.4.0),
+         python-oslo.i18n (>= 0.2.0),
+         python-oslo.messaging (>= 1.4.1),
+         python-oslo.rootwrap (>= 1.3.0.0),
+         python-paste,
+         python-pastedeploy (>= 1.5.0),
+         python-pbr (>= 0.6),
+         python-pecan (>= 0.5.0),
+         python-posix-ipc,
+         python-prettytable (>= 0.6),
+         python-pyparsing,
+         python-routes,
+         python-six (>= 1.7.0),
+         python-sqlalchemy (>= 0.8.4),
+         python-stevedore (>= 0.14),
+         python-webob (>= 1.2.3),
+         ${misc:Depends},
+         ${python:Depends}
+Provides: ${python:Provides}
+XB-Python-Version: ${python:Versions}
+Description: OpenStack DNS as a Service - Python libs
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides the Python libraries.
+
+Package: designate-common
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: adduser,
+         dbconfig-common,
+         python-designate (= ${binary:Version}),
+         sqlite3,
+         ${python:Depends},
+         ${misc:Depends}
+Description: OpenStack DNS as a Service - common files
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides common files.
+
+Package: designate
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: designate-agent (= ${binary:Version}),
+         designate-api (= ${binary:Version}),
+         designate-central (= ${binary:Version}),
+         designate-common (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenStack DNS as a Service - metapackage
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package is a metapackage that helps installing all of Designate at once.
+
+Package: designate-api
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: adduser,
+         designate-common (= ${binary:Version}),
+         python-designate (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenStack DNS as a Service - API server
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides the REST API server.
+
+Package: designate-central
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: designate-common (= ${binary:Version}),
+         python-designate (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenStack DNS as a Service - central daemon
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides the central daemon.
+
+Package: designate-agent
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: designate-common (= ${binary:Version}),
+         python-designate (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenStack DNS as a Service - agent
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides the agent.
+
+Package: designate-sink
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: designate-common (= ${binary:Version}),
+         python-designate (= ${binary:Version}),
+         ${misc:Depends},
+         ${python:Depends}
+Description: OpenStack DNS as a Service - sink
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package provides the sink service.
+
+Package: designate-doc
+Section: doc
+Architecture: all
+Pre-Depends: dpkg (>= 1.15.6~)
+Depends: ${misc:Depends}, ${sphinxdoc:Depends}
+Description: OpenStack DNS as a Service - doc
+ Designate provides DNSaaS services for OpenStack. It provides a multi-tenant
+ REST API for domain & record management. It is Integrated with Keystone for
+ authentication, and provides a framework in place to integrate with Nova and
+ Neutron notifications (for auto-generated records). Designate supports
+ PowerDNS and Bind9 out of the box.
+ .
+ This package contains the documentation.
