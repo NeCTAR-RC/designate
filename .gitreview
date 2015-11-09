@@ -1,4 +1,5 @@
 [gerrit]
-host=review.openstack.org
+host=review.rc.nectar.org.au
 port=29418
-project=openstack/designate.git
+project=NeCTAR-RC/designate.git
+defaultbranch=nectar/liberty
