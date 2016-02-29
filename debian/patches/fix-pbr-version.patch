@@ -1,0 +1,24 @@
+diff --git a/designate/service.py b/designate/service.py
+index eecb91c..f7f205c 100644
+--- a/designate/service.py
++++ b/designate/service.py
+@@ -38,7 +38,6 @@ from designate.i18n import _LI
+ from designate.i18n import _LW
+ from designate import rpc
+ from designate import policy
+-from designate import version
+ from designate import utils
+ 
+ # TODO(kiall): These options have been cut+paste from the old WSGI code, and
+@@ -87,9 +86,8 @@ class Service(service.Service):
+     def start(self):
+         super(Service, self).start()
+ 
+-        LOG.info(_('Starting %(name)s service (version: %(version)s)') %
+-                 {'name': self.service_name,
+-                  'version': version.version_info.version_string()})
++        LOG.info(_('Starting %(name)s service') %
++                 {'name': self.service_name,})
+ 
+     def stop(self):
+         LOG.info(_('Stopping %(name)s service') % {'name': self.service_name})
