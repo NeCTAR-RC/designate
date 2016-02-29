@@ -1,0 +1,259 @@
+designate (1:1.0.0-0ubuntu1~cloud0) trusty-liberty; urgency=medium
+
+  * New upstream release for the Ubuntu Cloud Archive.
+
+ -- Openstack Ubuntu Testing Bot <openstack-testing-bot@ubuntu.com>  Fri, 16 Oct 2015 13:03:41 +0000
+
+designate (1:1.0.0-0ubuntu1) wily; urgency=medium
+
+  * New upstream release for OpenStack Liberty.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Thu, 15 Oct 2015 12:39:43 -0400
+
+designate (1:1.0.0~rc2-0ubuntu1) wily; urgency=medium
+
+  * New upstream release candidate for OpenStack Liberty.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Tue, 06 Oct 2015 11:40:30 -0400
+
+designate (1:1.0.0~rc1-0ubuntu3) wily; urgency=medium
+
+  * d/control,designate-zone-manager.init.in: Add binary package an init script
+    for missing zone-manager function.
+
+ -- James Page <james.page@ubuntu.com>  Fri, 02 Oct 2015 13:23:04 +0100
+
+designate (1:1.0.0~rc1-0ubuntu2) wily; urgency=medium
+
+  * d/control: Drop python-dnspython3.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Tue, 29 Sep 2015 16:28:13 -0400
+
+designate (1:1.0.0~rc1-0ubuntu1) wily; urgency=medium
+
+  * d/watch: Update for upstream rc versioning.
+  * New upstream milestone for OpenStack Liberty.
+  * d/control: Align (build-)depends with upstream.
+
+ -- James Page <james.page@ubuntu.com>  Mon, 28 Sep 2015 10:42:26 +0100
+
+designate (1:1.0.0~b3-0ubuntu1) wily; urgency=medium
+
+  * New upstream milestone for OpenStack Liberty.
+  * d/control: Align (build-)depends with upstream.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Tue, 08 Sep 2015 15:50:31 -0400
+
+designate (1:1.0.0~b2-0ubuntu1) wily; urgency=medium
+
+  * New upstream milestone for OpenStack Liberty.
+  * d/control: Align (build-)depends with upstream.
+  * d/rules: Remove .eggs directory in override_dh_auto_clean.
+
+ -- Corey Bryant <corey.bryant@canonical.com>  Wed, 19 Aug 2015 10:02:09 -0400
+
+designate (1:1.0.0~b1-0ubuntu5) wily; urgency=medium
+
+  * d/pydist-overrides: Ignore dependency on suds-jurko, provided by
+    python-suds in Ubuntu.
+
+ -- James Page <james.page@ubuntu.com>  Wed, 05 Aug 2015 10:52:36 +0200
+
+designate (1:1.0.0~b1-0ubuntu4) wily; urgency=medium
+
+  * No change rebuild with SQLAlchemy 1.0.6.
+
+ -- James Page <james.page@ubuntu.com>  Fri, 24 Jul 2015 09:24:47 +0100
+
+designate (1:1.0.0~b1-0ubuntu3) wily; urgency=medium
+
+  [ Thomas Goirand ]
+  * Added -mdns and -pool-manager services through new .deb which were missing
+    (LP: #1473460).
+  * Removed all individual debian/*.logrotate files, using only a single
+    designate-common.logrotate file now.
+
+ -- James Page <james.page@ubuntu.com>  Thu, 16 Jul 2015 11:29:49 +0100
+
+designate (1:1.0.0~b1-0ubuntu2) wily; urgency=medium
+
+  * d/rules: Drop use of OSLO_PACKAGE_VERSION as we always build from
+    upstream release tarballs.
+
+ -- James Page <james.page@ubuntu.com>  Fri, 26 Jun 2015 14:08:49 +0100
+
+designate (1:1.0.0~b1-0ubuntu1) wily; urgency=medium
+
+  * Merge from Debian unstable.  Remaining changes:
+    - d/p/skipped-tests.patch: Skip tests that fail in the buildds due to
+      use of multicast.
+    - d/p/fix-SO_REUSEPORT-usage.patch: Cherry pick workaround for use of
+      SO_REUSEPORT socket option with older kernel versions.
+    - d/watch: Use tarballs.openstack.org for upstream releases.
+    - d/rules: Generalize exclusion of usr/etc installed files with use
+      of --fail-missing.
+  * New upstream milestone for OpenStack Liberty:
+    - d/control: Align (build-)depends with upstream.
+    - d/*: wrap-and-sort -a -t.
+    - d/p/fix-SO_REUSEPORT-usage.patch: Dropped, included upstream.
+  * d/control: Update Vcs fields for Launchpad Git repositories.
+
+ -- James Page <james.page@ubuntu.com>  Thu, 25 Jun 2015 12:06:57 +0100
+
+designate (2015.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Uploading to unstable.
+  * Reviewed (build-)depends for this release.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 24 Dec 2014 14:43:36 +0800
+
+designate (2015.1.0-0ubuntu1.1) vivid; urgency=medium
+
+  * d/p/fix-SO_REUSEPORT-usage.patch: Cherry pick workaround for use of
+    SO_REUSEPORT socket option with older kernel versions, resolving
+    FTBFS on distro builders which use 3.2.0 kernels (LP: #1451691).
+
+ -- James Page <james.page@ubuntu.com>  Mon, 11 May 2015 12:00:25 +0100
+
+designate (2015.1.0-0ubuntu1) vivid; urgency=medium
+
+  * New upstream release for OpenStack Kilo. (LP: #1449744) 
+
+ -- Chuck Short <zulcss@ubuntu.com>  Fri, 01 May 2015 08:33:33 +0200
+
+designate (2015.1~rc1-0ubuntu1) vivid; urgency=medium
+
+  * New upstream milestone release for OpenStack Kilo:
+    - d/control: Align dependencies and versions with upstream.
+    - debian/patches/fixup-jsonschema.patch: Dropped no longer needed.
+    - debian/patches/skipped-tests.patch: Skip tests that fail
+      in the buildds.
+
+ -- Chuck Short <zulcss@ubuntu.com>  Thu, 16 Apr 2015 08:44:15 -0400
+
+designate (2015.1~b3-0ubuntu1) vivid; urgency=medium
+
+  * New upstream milestone release for OpenStack Kilo:
+    - d/control: Align dependencies and versions with upstream.
+    - d/p/fixup-jsonschema.patch: Fixup compat with jsonschema 2.3.0.
+  * d/watch: Use tarballs.openstack.org for releases.
+  * d/designate-api.init.in: Fixup name for designate-api binary.
+
+ -- James Page <james.page@ubuntu.com>  Mon, 30 Mar 2015 11:05:29 +0100
+
+designate (2014.2-3) experimental; urgency=medium
+
+  * Fix upgrade from Icehouse to Juno failing because of the directive
+    database_connection has been renamed connection (Close: #769765).
+    Thanks to Andreas Beckmann <anbe@debian.org> for the report.
+  * Adds remove-PROTOCOL_SSLv3-from-sslutils.py.patch.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 10 Dec 2014 11:09:35 +0000
+
+designate (2014.2-2) experimental; urgency=medium
+
+  * Using connection = as directive for the db, and using "database sync"
+    instead of "database-sync" (Closes: #767853).
+  * Added dh-python as build-depends.
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 10 Nov 2014 14:49:22 +0000
+
+designate (2014.2-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Mangling upstream rc and beta versions in watch file.
+
+ -- Thomas Goirand <zigo@debian.org>  Sun, 05 Oct 2014 14:24:33 +0800
+
+designate (2014.2~rc1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Added --fail-missing when calling dh_install.
+  * Fixed version of rootwrap depends.
+  * Now using templated init script for sysv-rc, generated systemd unit and
+    upstart jobs, using openstack-pkg-tools >= 13.
+  * Standards-Version is now 3.9.6 (no change).
+  * Failed unit test suite fails the build.
+  * designate-api now depends on adduser.
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 03 Oct 2014 13:35:35 +0800
+
+designate (2014.2~b3-1) experimental; urgency=medium
+
+  * New upstream release.
+  * Uploading to experimental just before the Jessie freeze.
+  * Updated (build-)depends form this release.
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 23 Sep 2014 02:11:53 +0800
+
+designate (2014.1-9) unstable; urgency=medium
+
+  * Fixed new upstream URL in debian/rules.
+  * Added sqlite3 as depends: for designate-common (Closes: #754673).
+
+ -- Thomas Goirand <zigo@debian.org>  Sun, 13 Jul 2014 23:15:25 +0800
+
+designate (2014.1-8) unstable; urgency=medium
+
+  * Now build-depends on openstack-pkg-tools >= 12~.
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 05 Jun 2014 09:08:52 +0000
+
+designate (2014.1-7) unstable; urgency=medium
+
+  * Added missing depends on dbconfig-common (Closes: #749316).
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 02 Jun 2014 03:04:37 +0000
+
+designate (2014.1-6) unstable; urgency=medium
+
+  * Do not use addgroup in config script (Closes: #749316).
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 30 May 2014 09:25:43 +0800
+
+designate (2014.1-5) unstable; urgency=medium
+
+  * Added a copytruncate in logrotate scripts.
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 29 May 2014 14:04:33 +0800
+
+designate (2014.1-4) unstable; urgency=medium
+
+  * Added missing dependency on adduser (Closes: #749316).
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 27 May 2014 12:53:18 +0800
+
+designate (2014.1-3) unstable; urgency=medium
+
+  * Added French debconf templates translation thanks to Julien Patriarca
+    <leatherface@debian.org> (Closes: #747511).
+
+ -- Thomas Goirand <zigo@debian.org>  Mon, 12 May 2014 05:38:37 +0800
+
+designate (2014.1-2) unstable; urgency=medium
+
+  * Added Portuguese debconf translation, thanks to Américo Monteiro
+    <a_monteiro@gmx.com> (Closes: #746599).
+
+ -- Thomas Goirand <zigo@debian.org>  Sat, 03 May 2014 06:59:17 +0000
+
+designate (2014.1-1) unstable; urgency=medium
+
+  * New upsteram release.
+  * Uploading to unstable.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 30 Apr 2014 00:40:07 +0800
+
+designate (2014.1~rc1-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 02 Apr 2014 14:02:53 +0800
+
+designate (2014.1~b3-1) experimental; urgency=low
+
+  * Initial release (Closes: #731406).
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 05 Dec 2013 09:55:26 +0800
+
