@@ -6,7 +6,7 @@ UPSTREAM_GIT = git://github.com/openstack/designate.git
 include /usr/share/openstack-pkg-tools/pkgos.make
 
 %:
-	dh $@ --buildsystem=python_distutils --with python2,sphinxdoc,systemd
+	dh $@ --buildsystem=python_distutils --with python2,systemd
 
 override_dh_auto_install:
 	dh_auto_install -O--buildsystem=python_distutils
