@@ -1,0 +1,16 @@
+debian/designate_sudoers etc/sudoers.d/
+etc/designate/api-paste.ini
+etc/designate/designate.conf
+etc/designate/policy.json.sample
+etc/designate/rootwrap.d
+usr/bin/designate-agent
+usr/bin/designate-api
+usr/bin/designate-central
+usr/bin/designate-manage
+usr/bin/designate-mdns
+usr/bin/designate-pool-manager
+usr/bin/designate-producer
+usr/bin/designate-rootwrap
+usr/bin/designate-sink
+usr/bin/designate-worker
+usr/bin/designate-zone-manager

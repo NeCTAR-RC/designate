@@ -1,0 +1,5 @@
+Tests: designate-daemons python-designate
+Depends: python-designate, designate-api, designate, designate-sink, designate-mdns,
+ designate-pool-manager, designate-zone-manager, designate-worker, 
+Restrictions: needs-root
+
