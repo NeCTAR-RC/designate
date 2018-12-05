@@ -35,8 +35,8 @@ override_dh_auto_test:
 #endif
 
 override_dh_sphinxdoc:
-#ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
-#	PYTHONPATH=. sphinx-build -b html doc/source $(CURDIR)/debian/designate-doc/usr/share/doc/designate-doc/html
-#	# NOTE(jamespage): Disable until search index fixed.
-#	# dh_sphinxdoc -O--buildsystem=python_distutils
-#endif
+ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
+	PYTHONPATH=. sphinx-build -b html doc/source $(CURDIR)/debian/designate-doc/usr/share/doc/designate-doc/html
+	# NOTE(jamespage): Disable until search index fixed.
+	# dh_sphinxdoc -O--buildsystem=python_distutils
+endif
