@@ -1,0 +1,54 @@
+#!/usr/bin/make -f
+
+UPSTREAM_GIT = git://github.com/openstack/designate.git
+include /usr/share/openstack-pkg-tools/pkgos.make
+
+%:
+	dh $@ --buildsystem=python_distutils --with python2,python3,sphinxdoc,systemd
+
+override_dh_auto_install:
+	pkgos-dh_auto_install
+	install -D -m 0664 $(CURDIR)/etc/designate/rootwrap.conf.sample $(CURDIR)/debian/designate-common/etc/designate/rootwrap.conf
+	rm -rf $(CURDIR)/debian/python*/usr/etc
+
+override_dh_auto_clean:
+	dh_auto_clean -O--buildsystem=python_distutils
+	rm -rf doc/build build debian/doctrees
+	rm -f debian/*.init debian/*.upstart debian/*.service
+	rm -rf .eggs
+	rm -f etc/designate/policy.json.sample etc/designate/designate.conf
+
+override_dh_install:
+	dh_install -O--buildsystem=python_distutils --fail-missing -Xusr/etc
+
+override_dh_auto_build:
+	PYTHONPATH=$(CURDIR) oslopolicy-sample-generator \
+		--config-file=$(CURDIR)/etc/designate/designate-policy-generator.conf \
+		--output-file=$(CURDIR)/etc/designate/policy.json.sample
+	PYTHONPATH=$(CURDIR) oslo-config-generator \
+		--config-file=$(CURDIR)/etc/designate/designate-config-generator.conf \
+		--output-file=$(CURDIR)/etc/designate/designate.conf
+	dh_auto_build -O--buildsystem=python_distutils
+
+override_dh_auto_test:
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	# NOTE(coreycb) Skip Py3.7 tests until they run successfully upstream:
+	# https://bugs.launchpad.net/bugs/1782647
+	# pkgos-dh_auto_test
+	echo "===> Running tests"
+	set -ex ; for i in 2.7 3.6 ; do \
+		PYMAJOR=`echo $$i | cut -d'.' -f1` ; \
+		echo "===> Testing with python$$i (python$$PYMAJOR)" ; \
+		rm -rf .stestr ; \
+		TEMP_REZ=`mktemp -t` ; \
+		PYTHONPATH=$(CURDIR) PYTHON=python$$i python$$PYMAJOR-stestr run --subunit | tee $$TEMP_REZ | subunit2pyunit ; \
+		cat $$TEMP_REZ | subunit-filter -s --no-passthrough | subunit-stats ; \
+		rm -f $$TEMP_REZ ; \
+		rm -rf .stestr ; \
+	done
+endif
+
+override_dh_sphinxdoc:
+ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
+	PYTHONPATH=. sphinx-build -b html doc/source -d debian/doctrees $(CURDIR)/debian/designate-doc/usr/share/doc/designate-doc/html
+endif

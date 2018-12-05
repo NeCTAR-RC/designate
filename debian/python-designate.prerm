@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "remove" ] ; then
+	update-alternatives --remove designate-agent /usr/bin/python2-designate-agent
+	update-alternatives --remove designate-api /usr/bin/python2-designate-api
+	update-alternatives --remove designate-central /usr/bin/python2-designate-central
+	update-alternatives --remove designate-manage /usr/bin/python2-designate-manage
+	update-alternatives --remove designate-mdns /usr/bin/python2-designate-mdns
+	update-alternatives --remove designate-pool-manager /usr/bin/python2-designate-pool-manager
+	update-alternatives --remove designate-producer /usr/bin/python2-designate-producer
+	update-alternatives --remove designate-rootwrap /usr/bin/python2-designate-rootwrap
+	update-alternatives --remove designate-sink /usr/bin/python2-designate-sink
+	update-alternatives --remove designate-worker /usr/bin/python2-designate-worker
+	update-alternatives --remove designate-zone-manager /usr/bin/python2-designate-zone-manager
+fi
+
+#DEBHELPER#
+
+exit 0

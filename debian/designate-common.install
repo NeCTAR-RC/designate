@@ -1,0 +1,5 @@
+debian/designate_sudoers etc/sudoers.d/
+etc/designate/api-paste.ini
+etc/designate/designate.conf
+etc/designate/policy.json.sample
+etc/designate/rootwrap.d

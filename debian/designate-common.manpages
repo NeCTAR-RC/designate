@@ -1,0 +1,9 @@
+debian/man/designate-agent.8
+debian/man/designate-api.8
+debian/man/designate-central.8
+debian/man/designate-manage.8
+debian/man/designate-mdns.8
+debian/man/designate-pool-manager.8
+debian/man/designate-rootwrap.8
+debian/man/designate-sink.8
+debian/man/designate-zone-manager.8

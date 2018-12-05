@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ] ; then
+	update-alternatives --install /usr/bin/designate-agent designate-agent /usr/bin/python2-designate-agent 300
+	update-alternatives --install /usr/bin/designate-api designate-api /usr/bin/python2-designate-api 300
+	update-alternatives --install /usr/bin/designate-central designate-central /usr/bin/python2-designate-central 300
+	update-alternatives --install /usr/bin/designate-manage designate-manage /usr/bin/python2-designate-manage 300
+	update-alternatives --install /usr/bin/designate-mdns designate-mdns /usr/bin/python2-designate-mdns 300
+	update-alternatives --install /usr/bin/designate-pool-manager designate-pool-manager /usr/bin/python2-designate-pool-manager 300
+	update-alternatives --install /usr/bin/designate-producer designate-producer /usr/bin/python2-designate-producer 300
+	update-alternatives --install /usr/bin/designate-rootwrap designate-rootwrap /usr/bin/python2-designate-rootwrap 300
+	update-alternatives --install /usr/bin/designate-sink designate-sink /usr/bin/python2-designate-sink 300
+	update-alternatives --install /usr/bin/designate-worker designate-worker /usr/bin/python2-designate-worker 300
+	update-alternatives --install /usr/bin/designate-zone-manager designate-zone-manager /usr/bin/python2-designate-zone-manager 300
+fi
+
+#DEBHELPER#
+
+exit 0

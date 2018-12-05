@@ -1,0 +1,10 @@
+Tests: designate-daemons designate-shebangs-py3
+Depends: python3-designate, designate-api, designate, designate-sink,
+ designate-mdns, designate-pool-manager, designate-zone-manager,
+ designate-worker,
+Restrictions: needs-root
+
+Tests: designate-daemons designate-shebangs-py2
+Depends: designate-api, designate, designate-sink, designate-mdns,
+ designate-pool-manager, designate-zone-manager, designate-worker,
+Restrictions: needs-root
