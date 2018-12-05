@@ -1,6 +1,0 @@
-#!/usr/bin/python
-#----------------------
-# Testing python library
-#----------------------
-import designate
-print "Imported designate module OK"
