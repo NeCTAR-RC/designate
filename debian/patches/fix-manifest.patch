@@ -1,0 +1,13 @@
+diff --git a/MANIFEST.in b/MANIFEST.in
+new file mode 100644
+index 0000000..9a4daed
+--- /dev/null
++++ b/MANIFEST.in
+@@ -0,0 +1,7 @@
++include AUTHORS
++include ChangeLog
++exclude .gitignore
++exclude .gitreview
++
++global-exclude *.pyc
++recursive-include designate *
