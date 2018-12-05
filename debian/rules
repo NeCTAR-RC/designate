@@ -30,9 +30,9 @@ override_dh_auto_build:
 	dh_auto_build -O--buildsystem=python_distutils
 
 override_dh_auto_test:
-ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
-	ostestr
-endif
+#ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+#	ostestr
+#endif
 
 override_dh_sphinxdoc:
 ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
